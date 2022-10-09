@@ -1,0 +1,75 @@
+
+
+.fields-mnue {
+  position: relative;
+  box-shadow: 0 0 10px #0000003b;
+  overflow: auto;
+  height: 100vh;
+  z-index: 1;
+  background-color: #fff;
+}
+
+.title {
+  text-align: center;
+  border-bottom: 1px solid #0000003b;
+  background-color: #eee;
+  padding: .5rem 0;
+  margin: 0;
+  font-weight: 500;
+  font-size: 17px;
+  color: #006280;
+  letter-spacing: .5px;
+}
+
+.items-container {
+  padding: 0;
+  margin: 0;
+
+  .item {
+    list-style: none;
+
+    button {
+      width: 100%;
+      text-align: start;
+      border-radius: inherit;
+      padding: 10px 15px;
+      box-shadow: 0 3px 10px rgb(0 0 0 / 12%);
+
+      &:hover {
+        background-color: #f2f2f2;
+      }
+
+      .button-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .info-icon {
+          color: #005d7bc4;
+        }
+      }
+    }
+  }
+
+  .tooltip {
+    font-size: 12px;
+  }
+
+  .img {
+    width: 25px;
+    margin: 0 10px;
+  }
+
+  .field-name {
+    text-transform: capitalize;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4f7ab1;
+  border-radius: 8px;
+}

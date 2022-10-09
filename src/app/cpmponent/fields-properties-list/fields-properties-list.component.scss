@@ -1,0 +1,67 @@
+
+.properties-section  {
+  position: relative;
+  box-shadow: 0 0 10px #0000003b;
+  overflow: auto;
+  height: 100vh;
+  z-index: 1;
+
+  .title {
+    text-align: center;
+    border-bottom: 1px solid #0000003b;
+    background-color: #eee;
+    padding: .5rem 0;
+    margin: 0;
+    font-weight: 500;
+    font-size: 17px;
+    color: #006280;
+    letter-spacing: .5px;
+  }
+
+  .properties-container {
+    padding: 10px;
+    border-left: 4px solid red;
+    background-color: antiquewhite;
+    box-shadow: 0 3px 5px rgb(0 0 0 / 12%);
+
+    .description {
+      font-size: 15px;
+      display: flex;
+      gap: 10px;
+      margin: 3px 0;
+
+      .type-style {
+        font-weight: 500;
+        text-transform: capitalize;
+      }
+
+      .subtitle {
+        display: inline-block;
+        text-transform: capitalize;
+        width: 65px;
+        color: red;
+      }
+
+      .details {
+        display: block;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        flex: 1;
+      }
+
+      .option {
+        padding-inline-start: 5rem;
+      }
+    }
+  }
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4f7ab1;
+  border-radius: 8px;
+}

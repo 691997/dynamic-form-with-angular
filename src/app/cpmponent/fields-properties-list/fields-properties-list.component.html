@@ -1,0 +1,36 @@
+
+  <div class="properties-section">
+    <h2 class='title'> Field Properties </h2>
+    
+    <div class="properties-container">
+      <div class="description-container">
+        <span class="description" *ngIf="!itemProperties || !itemProperties.type"> No item selected </span>
+
+        <ul class="px-1" *ngIf="itemProperties && itemProperties.type">
+          <li class="description" >
+            <span class="subtitle"> Name: </span>
+            <span class="details">{{ itemProperties.label }}  </span>
+          </li>
+
+          <li class="description">
+              <span class="subtitle"> Tyep: </span>
+              <span> {{ itemProperties.type }} </span>
+          </li>
+
+          <li class="description">
+              <span class="subtitle"> visibility: </span>
+              <span> {{ itemProperties.isVisible }} </span>
+          </li>
+
+          <li class="description flex-column gap-0" *ngIf="itemProperties.options">
+              <span class="subtitle"> Options: </span>
+              <ul class="option">
+                <li *ngFor="let option of itemProperties.options"> {{ option }} </li>
+              </ul>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+
+  </div>

@@ -1,0 +1,48 @@
+
+<div mat-dialog-content>
+  <h3 class="title"> {{ data.title }} </h3>
+
+  <!------ Name field ------>
+  <div *ngIf="!data?.isOption">
+    <mat-form-field appearance="fill" class="w-100" [ngSwitch]="data.fieldType">
+      <mat-label> {{ data.inputLabel || 'Name'}} </mat-label>
+      <input matInput *ngSwitchDefault [(ngModel)]="fieldData.label" required>
+      <textarea matInput *ngSwitchCase="Types.html" [(ngModel)]="fieldData.label" rows="5"></textarea>
+    </mat-form-field>
+  </div>
+
+  <!------ Options ------>
+  <div *ngIf="data?.isOption">
+    <mat-form-field appearance="fill" class="w-100" >
+      <mat-label> Option </mat-label>
+      <input matInput [(ngModel)]="option" required>
+    </mat-form-field>
+    <mat-icon class="add-icon" (click)="addOption()"> add </mat-icon>
+    <div class="option-container" *ngFor="let option of options;let i = index">
+      <span> - {{ option }} </span>
+      <mat-icon (click)="deleteOption(i)" class="delete-icon"> delete </mat-icon>
+    </div>
+  </div>
+
+  <!------ Select field ------>
+  <mat-form-field appearance="fill" class="w-100" *ngIf="(data?.withSections) && (data.sections.length > 1) && (data?.fieldType != Types.section)">
+    <mat-label> Add to section </mat-label>
+    <mat-select [(ngModel)]="fieldData.section">
+      <mat-option *ngFor="let section of data.sections" [value]="section"> {{ section.label }} </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!------ HTML field 'Note' ------>
+  <mat-hint *ngIf="data?.fieldType == Types.html">
+    <strong> Note: </strong>
+    <ul class="m-0 ps-4">
+      <li> make sure you are writing the correct HTML syntax. </li>
+      <li> you can resize the first field above through the icon at the bottom. </li>
+    </ul>
+  </mat-hint>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button class="ok-button" [mat-dialog-close]="fieldData"> Ok </button>
+  <button mat-button class="cancel-button" [mat-dialog-close] type="button"> Cancel </button>
+</div>

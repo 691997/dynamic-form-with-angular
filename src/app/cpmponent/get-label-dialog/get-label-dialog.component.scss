@@ -1,0 +1,65 @@
+
+.title {
+  text-align: center;
+  text-transform: capitalize;
+  font-size: 17px;
+  font-weight: 500;
+  color: #005d7bdb;
+}
+
+.add-icon {
+  width: 100%;
+  text-align: end;
+  cursor: pointer;
+}
+
+.option-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 15px;
+  letter-spacing: .2px;
+
+  &:hover {
+    background-color: #f2f2f2;
+    box-shadow: -2px 5px 10px rgb(0 0 0 / 12%);
+  }
+
+  &:last-child {
+    margin-bottom: 5px;
+  }
+
+  .delete-icon {
+    font-size: 20px;
+    color: #f06b20;
+    cursor: pointer;
+    height: auto;
+  }
+
+}
+
+.cancel-button,
+.ok-button  {
+  width: 48%;
+  color: #fff;
+  box-shadow: 1px 3px 6px rgb(0 0 0 / 30%);
+}
+
+.ok-button {
+  background-color: #005d7b;
+}
+
+.cancel-button {
+  background-color: #f0681c;
+}
+
+::ng-deep {
+  .dialog-class {
+    width: 400px;
+  }
+
+  .mat-hint {
+    font-size: 12px;
+    display: flex;
+  }
+}

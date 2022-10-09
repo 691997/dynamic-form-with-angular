@@ -1,0 +1,22 @@
+
+<div class="fields-mnue">
+  <h2 class='title'> Form Fields </h2>
+  <ul class="items-container">
+    <li *ngFor="let field of mainFieldsMnue" class="item">
+      <button mat-raised-button (click)="generateField(field)">
+        <div class="button-content">
+          <div>
+            <img class="img" loading="lazy" [src]="field.img" alt="field img">
+            <span class="field-name"> {{ field.label }} </span>
+          </div>
+          <mat-icon matTooltip="{{field.description}}"
+                    matTooltipClass="tooltip"
+                    [matTooltipPosition]="'right'"
+                    class="info-icon" >
+            info
+          </mat-icon>
+        </div>
+      </button>
+    </li>
+  </ul>
+</div>
