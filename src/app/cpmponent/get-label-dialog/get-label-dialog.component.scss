@@ -6,18 +6,16 @@
   font-weight: 500;
   color: #005d7bdb;
 }
-
-.add-icon {
-  width: 100%;
+.add-button {
+  margin-top: -1rem;
   text-align: end;
-  cursor: pointer;
 }
 
 .option-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 15px;
+  padding: 5px;
   letter-spacing: .2px;
 
   &:hover {
@@ -34,6 +32,9 @@
     color: #f06b20;
     cursor: pointer;
     height: auto;
+    display: block;
+    margin: auto;
+    width: auto;
   }
 
 }
@@ -43,10 +44,15 @@
   width: 48%;
   color: #fff;
   box-shadow: 1px 3px 6px rgb(0 0 0 / 30%);
+  transition: .3s;
 }
 
 .ok-button {
   background-color: #005d7b;
+  &:disabled {
+    background-color: #005c7b8f;
+    color: #fff;
+  }
 }
 
 .cancel-button {

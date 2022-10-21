@@ -1,5 +1,7 @@
 <section class="dynamic-form-section">
-  <app-fields-generator-list [sectionsLookup]="sectionsLookup" (newElement)="getNewElement($event)" ></app-fields-generator-list>
+  <app-fields-generator-list [sectionsLookup]="sectionsLookup"
+                             (newElement)="getNewElement($event)">
+  </app-fields-generator-list>
 
   <div class="free-area-container" >
     <div class="free-area">
@@ -9,17 +11,19 @@
         <label class="section-label">
           <span> {{ section.label }} </span>
           <div>
-            <mat-icon class="section-icon" (click)="sectionVisibility(section, sectionIndex)" *ngIf="sectionIndex > 0" > {{ section.isVisible ? 'visibility' : 'visibility_off' }} </mat-icon>
+            <mat-icon class="section-icon" (click)="sectionVisibility(sectionIndex)" *ngIf="sectionIndex > 0" > {{ section.isVisible ? 'visibility' : 'visibility_off' }} </mat-icon>
             <mat-icon class="section-icon mx-2" (click)="deleteSection(sectionIndex)" *ngIf="sectionIndex > 0" > delete </mat-icon>
           </div>
         </label>
 
-        <div class='drag-element row' *ngFor="let field of section.fields;let fieldIndex = index" (click)="sendFieldDetails(field)" [ngSwitch]="field.type" cdkDrag>
-          <label class='col-8 p-0' *ngIf="field.type != Types.dialog && field.type != Types.html"> {{ field.label }} </label>
+        <div class='drag-element row' [style]="field.style" *ngFor="let field of section.fields;let fieldIndex = index" (click)="sendFieldDetails(field, fieldIndex, sectionIndex)" [ngSwitch]="field.type" cdkDrag>
+          <label class='col-7 p-0' *ngIf="field.type != Types.dialog && field.type != Types.html"> {{ field.label }} </label>
 
           <input *ngSwitchDefault class="col-11 mt-2 m-auto" [type]="field.type" [placeholder]="field.type + ' field'" disabled>
-          <input *ngSwitchCase="Types.radio" class="col-4" type="radio">
-          <input *ngSwitchCase="Types.checkbox" class="col-4" type="checkbox">
+          <input *ngSwitchCase="Types.radio" class="col-5" type="radio">
+          <mat-icon *ngSwitchCase="Types.radioGroup" class="col-5 radio-group-icon" > list_alt </mat-icon>
+          <mat-icon *ngSwitchCase="Types.checkboxGroup" class="col-5 radio-group-icon" > ballot </mat-icon>
+          <input *ngSwitchCase="Types.checkbox" class="col-5" type="checkbox">
           <input *ngSwitchCase="Types.dialog" type="button" [value]="field.label +' Button'" class="col-4 mt-2 btn btn-secondary" disabled>
           <div   *ngSwitchCase="Types.html" [innerHtml]="field.label"></div>
           <select *ngSwitchCase="Types.select" class="col-11 mt-2 m-auto" disabled>
@@ -27,9 +31,9 @@
           </select>
 
           <div class="field-icon">
-            <mat-icon (click)="addOptions(field, fieldIndex, sectionIndex)" matTooltip="Add Options" [matTooltipPosition]="'above'" *ngIf="field.type == Types.select"> add </mat-icon>
-            <mat-icon (click)="fieldVisibility(field, fieldIndex, sectionIndex)" class="mx-2"> {{ field.isVisible ? 'visibility' : 'visibility_off' }} </mat-icon>
-            <mat-icon (click)="deleteField(sectionIndex, fieldIndex)"> close </mat-icon>
+            <mat-icon (click)="addOptions(field, fieldIndex, sectionIndex)" matTooltip="Add Options" [matTooltipPosition]="'above'" *ngIf="field.type == Types.select || field.type == Types.radioGroup || field.type == Types.checkboxGroup "> add </mat-icon>
+            <mat-icon (click)="fieldVisibility(field, fieldIndex, sectionIndex)" class="mx-2" matTooltip="Visibility" [matTooltipPosition]="'above'"> {{ field.isVisible ? 'visibility' : 'visibility_off' }} </mat-icon>
+            <mat-icon (click)="deleteField(sectionIndex, fieldIndex)" matTooltip="Delete item" [matTooltipPosition]="'above'"> close </mat-icon>
           </div>
         </div>
         <!--------------------------->
@@ -39,5 +43,9 @@
     <button mat-raised-button class="save-button" (click)="save()"> Save </button>
   </div>
 
-  <app-fields-properties-list [itemProperties]="itemProperties"></app-fields-properties-list>
+  <app-fields-properties-list [fieldProperties]="fieldProperties"
+                              [sectionIndex]="sectionIndex"
+                              [fieldIndex]="fieldIndex"
+                              (fieldStyles)="getFieldStyle($event)">
+  </app-fields-properties-list>
 </section>

@@ -6,21 +6,25 @@
   <div *ngIf="!data?.isOption">
     <mat-form-field appearance="fill" class="w-100" [ngSwitch]="data.fieldType">
       <mat-label> {{ data.inputLabel || 'Name'}} </mat-label>
-      <input matInput *ngSwitchDefault [(ngModel)]="fieldData.label" required>
+      <input matInput *ngSwitchDefault [(ngModel)]="fieldData.label" required autocomplete="off">
       <textarea matInput *ngSwitchCase="Types.html" [(ngModel)]="fieldData.label" rows="5"></textarea>
     </mat-form-field>
   </div>
 
-  <!------ Options ------>
+  <!------ Select Options ------>
   <div *ngIf="data?.isOption">
     <mat-form-field appearance="fill" class="w-100" >
       <mat-label> Option </mat-label>
       <input matInput [(ngModel)]="option" required>
     </mat-form-field>
-    <mat-icon class="add-icon" (click)="addOption()"> add </mat-icon>
-    <div class="option-container" *ngFor="let option of options;let i = index">
-      <span> - {{ option }} </span>
-      <mat-icon (click)="deleteOption(i)" class="delete-icon"> delete </mat-icon>
+    <div class="add-button">
+      <button mat-icon-button (click)="addSelectOption()"	[disabled]="!option.trim()" >
+        <mat-icon> add </mat-icon>
+      </button>
+    </div>
+    <div class="option-container row m-0" *ngFor="let option of options;let i = index">
+      <span class='col-10'> - {{ option }} </span>
+      <mat-icon (click)="deleteSelectOption(i)" class="delete-icon col-2"> delete </mat-icon>
     </div>
   </div>
 
@@ -43,6 +47,6 @@
 </div>
 
 <div mat-dialog-actions>
-  <button mat-button class="ok-button" [mat-dialog-close]="fieldData"> Ok </button>
+  <button mat-button class="ok-button" [mat-dialog-close]="fieldData" [disabled]=""> Ok </button>
   <button mat-button class="cancel-button" [mat-dialog-close] type="button"> Cancel </button>
 </div>

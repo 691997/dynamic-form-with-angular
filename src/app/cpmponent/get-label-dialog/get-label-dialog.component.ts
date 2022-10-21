@@ -41,18 +41,18 @@ export class GetLabelDialogComponent implements OnInit {
 
 // -------------------------------------- Functions -------------------------------------
 
-  addOption() {
+  addSelectOption() {
     this.options.push(this.option);
     this.option = '';
-    this.updateOptions();
+    this._updateSelectOptions();
   }
 
-  deleteOption( optionIndex: number ) {
+  deleteSelectOption( optionIndex: number ) {
     this.options = this.options.filter((_, index) => optionIndex !== index);
-    this.updateOptions();
+    this._updateSelectOptions();
   }
 
-  updateOptions() {
+  private _updateSelectOptions() {
     this.fieldData = { ...this.fieldData, options: this.options };
   }
 }

@@ -56,9 +56,11 @@ export interface IDynamicFormResult {
 
 export enum Types {
   text = 'text',
-  radio = 'radio',
   number = 'number',
   checkbox = 'checkbox',
+  checkboxGroup = 'checkbox group',                       // Not A Input Type
+  radio = 'radio',
+  radioGroup = 'radio Group',                             // Not A Input Type
   date = 'datapicker',                                    // The Correct HTML Element Typt is 'time'
   time = 'datapicker',                                    // The Correct HTML Element Typt is 'date'
   datetime = 'datapicker',                                // The Correct HTML Element Typt is 'datetime-local'

@@ -1,36 +1,66 @@
 
   <div class="properties-section">
     <h2 class='title'> Field Properties </h2>
-    
     <div class="properties-container">
       <div class="description-container">
-        <span class="description" *ngIf="!itemProperties || !itemProperties.type"> No item selected </span>
-
-        <ul class="px-1" *ngIf="itemProperties && itemProperties.type">
+        <span class="description" *ngIf="!field || !field.type"> No item selected </span>
+        <ul class="px-1" *ngIf="field && field.type">
           <li class="description" >
             <span class="subtitle"> Name: </span>
-            <span class="details">{{ itemProperties.label }}  </span>
+            <span class="details">{{ field.label }}  </span>
           </li>
-
           <li class="description">
               <span class="subtitle"> Tyep: </span>
-              <span> {{ itemProperties.type }} </span>
+              <span> {{ field.type }} </span>
           </li>
-
           <li class="description">
               <span class="subtitle"> visibility: </span>
-              <span> {{ itemProperties.isVisible }} </span>
+              <span> {{ field.isVisible }} </span>
           </li>
-
-          <li class="description flex-column gap-0" *ngIf="itemProperties.options">
+          <li class="description flex-column gap-0" *ngIf="field.options">
               <span class="subtitle"> Options: </span>
               <ul class="option">
-                <li *ngFor="let option of itemProperties.options"> {{ option }} </li>
+                <li *ngFor="let option of field.options"> {{ option }} </li>
               </ul>
           </li>
         </ul>
-
       </div>
+    </div>
+
+    <div class="style-section" *ngIf="field && field.type">
+      <h2 class="style-title"> style: </h2>
+      <p class="style-item-container">
+        <span> Color </span>
+        <mat-form-field>
+          <mat-select [(ngModel)]="style.color" (ngModelChange)="emitFieldStyle()">
+            <mat-option *ngFor="let color of colors" [value]="color">
+              <span class="colors-options" [ngStyle]="{'background-color': color}"></span>
+              <span> {{ color }} </span>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </p>
+
+      <p class="style-item-container">
+        <span> Background </span>
+        <mat-form-field>
+          <mat-select [(ngModel)]="style.bgColor" (ngModelChange)="emitFieldStyle()">
+            <mat-option *ngFor="let color of colors" [value]="color">
+              <span class="colors-options" [ngStyle]="{'background-color': color}"></span>
+              <span> {{ color }} </span>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </p>
+
+      <p class="style-item-container">
+        <span> Font Size </span>
+        <mat-form-field>
+          <mat-select [(ngModel)]="style.fontSize" (ngModelChange)="emitFieldStyle()">
+            <mat-option *ngFor="let size of fontSizes" [value]="size"> {{ size }} px  </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </p>
     </div>
 
   </div>

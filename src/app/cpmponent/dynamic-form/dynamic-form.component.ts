@@ -16,9 +16,12 @@ export class DynamicFormComponent implements OnInit {
   fieldsReference: IDynamicFormField = <IDynamicFormField>{};
   formSections: IDynamicFormSections[] = [{ label: 'section 1', order: 1, isVisible: true, fields: [] }];     // Default Section
   sectionsLookup: ISectionLookup[] = [];
-  itemProperties?: IDynamicFormField;
   Types = Types;
 
+  // --- Field Details ---
+  fieldProperties!: IDynamicFormField;
+  sectionIndex?: number;
+  fieldIndex?: number;
 // --------------------------------------------------------------------------------------
 
   constructor( private dialog: MatDialog ) { }
@@ -79,30 +82,30 @@ export class DynamicFormComponent implements OnInit {
   deleteField( sectionIndex: number, fieldIndex: number ) {
     this.formSections[sectionIndex].fields = this.formSections[sectionIndex].fields
                                              .filter(( _, index) => index !== fieldIndex );
-    this.sendFieldDetails(<IDynamicFormField>{});
+    this.sendFieldDetails(<IDynamicFormField>{}, fieldIndex, sectionIndex);
   }
 
-  sectionVisibility( section: IDynamicFormSections, sectionIndex: number ) {
+  sectionVisibility( sectionIndex: number ) {
     const visibility = this.formSections[sectionIndex].isVisible;
-    this.formSections[sectionIndex] = {...section, isVisible: !visibility };
+    this.formSections[sectionIndex].isVisible = !visibility;
   }
 
   fieldVisibility( field: IDynamicFormField, fieldIndex: number, sectionIndex: number ) {
     const visibility = this.formSections[sectionIndex].fields[fieldIndex].isVisible;
-    this.formSections[sectionIndex].fields[fieldIndex] = {...field, isVisible: !visibility };
-    this.sendFieldDetails({...field, isVisible: !visibility });
+    this.formSections[sectionIndex].fields[fieldIndex].isVisible = !visibility;
+    this.sendFieldDetails({...field, isVisible: !visibility }, fieldIndex, sectionIndex);
   }
 
   addOptions( field: IDynamicFormField, fieldIndex: number, sectionIndex: number ) {
-    const options = this.formSections[sectionIndex].fields[fieldIndex].options,
-          title = 'add options',
-          isOption = true,
-          dialogRef = this.dialog.open(GetLabelDialogComponent, {data: {title, options, isOption, sections: {}}});
+    const options = this.formSections[sectionIndex].fields[fieldIndex].options;
+    const title = 'add options';
+    const isOption = true;
+    const dialogRef = this.dialog.open(GetLabelDialogComponent, {data: {title, options, isOption, sections: {}}});
 
     dialogRef.afterClosed().subscribe(data => {
       if(data) {
-        this.formSections[sectionIndex].fields[fieldIndex] = {...field, options: data.options };
-        this.sendFieldDetails({...field, options: data.options });
+        this.formSections[sectionIndex].fields[fieldIndex].options = data.options ;
+        this.sendFieldDetails({...field, options: data.options }, fieldIndex, sectionIndex);
       }
     })
   }
@@ -111,13 +114,19 @@ export class DynamicFormComponent implements OnInit {
     this.sectionsLookup = this.formSections.map((item, index) => ({index , label: item.label}));
   }
 
+  getFieldStyle( field: any ) {
+    this.formSections[field.sectionIndex].fields[field.fieldIndex].style = field.style;
+  }
+
+  sendFieldDetails( field: IDynamicFormField, fieldIndex: number, sectionIndex: number ) {
+    this.fieldProperties = field;
+    this.fieldIndex = fieldIndex;
+    this.sectionIndex = sectionIndex;
+  }
+
   convertLabel(label: string) {
     const item = label.trim().replace(/\s+/g,'-').replace('.','_').toLowerCase();
     return item;
-  }
-
-  sendFieldDetails( field: IDynamicFormField ) {
-    this.itemProperties = field;
   }
 
   dragAndDrop( event: CdkDragDrop<IDynamicFormField[]> ) {

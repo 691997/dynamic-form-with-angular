@@ -15,6 +15,7 @@ import { FieldsGeneratorListComponent } from './cpmponent/fields-generator-list/
 import { FieldsPropertiesListComponent } from './cpmponent/fields-properties-list/fields-properties-list.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatIconModule,
     MatSelectModule,
     MatTooltipModule,
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
