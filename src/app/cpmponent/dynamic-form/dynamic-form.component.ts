@@ -33,9 +33,9 @@ export class DynamicFormComponent implements OnInit {
 // -------------------------------------- Functions -------------------------------------
 
   save() {
-    const title = 'Form Name',
-          sections =  this.sectionsLookup,
-          dialogRef = this.dialog.open(GetLabelDialogComponent, { data: {title, sections} });
+    const title = 'Form Name';
+    const sections =  this.sectionsLookup;
+    const dialogRef = this.dialog.open(GetLabelDialogComponent, { data: {title, sections} });
 
     dialogRef.afterClosed().subscribe((data: IFieldDialogData) => {
       if(data) {
@@ -105,9 +105,20 @@ export class DynamicFormComponent implements OnInit {
     dialogRef.afterClosed().subscribe(data => {
       if(data) {
         this.formSections[sectionIndex].fields[fieldIndex].options = data.options ;
+        data.withOtherOption && this._addFieldChildren( field, fieldIndex, sectionIndex );
         this.sendFieldDetails({...field, options: data.options }, fieldIndex, sectionIndex);
       }
     })
+  }
+
+  _addFieldChildren( field: IDynamicFormField, fieldIndex: number, sectionIndex: number ) {
+    const label = `other ${field.label}`;
+    const type = 'text';
+    const isVisible = true;
+    const htmlNameProperty = this.convertLabel(label);
+    const visibleIf = `${htmlNameProperty}:selected:other`;
+    const chiledField = { ...this.fieldsReference, label, type, isVisible, htmlNameProperty, visibleIf };
+    this.formSections[sectionIndex].fields[fieldIndex].children = [chiledField];
   }
 
   updateSectionLookup() {

@@ -18,17 +18,21 @@
       <input matInput [(ngModel)]="option" required>
     </mat-form-field>
     <div class="add-button">
+      <button mat-icon-button (click)="addOtherOption()" [matTooltip]='tooltipContent' matTooltipPosition="above" [disabled]="options.includes('other')" >
+        <mat-icon> post_add </mat-icon>
+      </button>
+
       <button mat-icon-button (click)="addSelectOption()"	[disabled]="!option.trim()" >
         <mat-icon> add </mat-icon>
       </button>
     </div>
     <div class="option-container row m-0" *ngFor="let option of options;let i = index">
-      <span class='col-10'> - {{ option }} </span>
+      <span class='col-10 text-capitalize'> - {{ option }} </span>
       <mat-icon (click)="deleteSelectOption(i)" class="delete-icon col-2"> delete </mat-icon>
     </div>
   </div>
 
-  <!------ Select field ------>
+  <!------ Select Section ------>
   <mat-form-field appearance="fill" class="w-100" *ngIf="(data?.withSections) && (data.sections.length > 1) && (data?.fieldType != Types.section)">
     <mat-label> Add to section </mat-label>
     <mat-select [(ngModel)]="fieldData.section">

@@ -77,6 +77,7 @@ export enum Types {
   section?: ISectionLookup,
   description?: string,
   img?: string,
+  withOtherOption?: boolean,
  }
 
  export interface ISectionLookup {

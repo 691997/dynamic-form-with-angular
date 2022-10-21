@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { IFieldDialogData, ISectionLookup, Types } from 'src/app/interfaces/dynamic-form';
 
+
+//--- this data are sending after closing dialog ---
 interface IDialogData {
   title: string ,
   inputLabel: string,
@@ -10,6 +12,7 @@ interface IDialogData {
   withSections?: boolean,
   isOption?: boolean,
   options: string[],
+  withOtherOption: boolean,
 }
 
 @Component({
@@ -25,6 +28,7 @@ export class GetLabelDialogComponent implements OnInit {
   options: string[] = [] ;
   option: string = '';
   Types = Types;
+  tooltipContent: string = "Add 'Other' option ... By checking this option it will create a new field that takes a user value";
 
 // --------------------------------------------------------------------------------------
 
@@ -35,19 +39,27 @@ export class GetLabelDialogComponent implements OnInit {
                 }
 
   ngOnInit() {
-    this.fieldData = { label: '', section: this.data.sections[0], type: this.data!.fieldType };
+    this.fieldData = { label: '', section: this.data.sections[0], type: this.data!.fieldType, options: this.data.options || [] };
     this.options = this.data.options || [];
   }
 
 // -------------------------------------- Functions -------------------------------------
 
   addSelectOption() {
-    this.options.push(this.option);
+    this.options.push(this.option.trim().toLowerCase());
     this.option = '';
     this._updateSelectOptions();
   }
 
+  addOtherOption() {
+    this.options.push('other');
+    this.fieldData.withOtherOption = true;
+    this._updateSelectOptions();
+  }
+
   deleteSelectOption( optionIndex: number ) {
+    const optionValue = this.options[optionIndex];
+    optionValue === 'other' && (this.fieldData.withOtherOption = false);
     this.options = this.options.filter((_, index) => optionIndex !== index);
     this._updateSelectOptions();
   }
